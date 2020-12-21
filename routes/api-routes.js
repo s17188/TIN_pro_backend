@@ -1,15 +1,12 @@
-// api-routes.js
-// Initialize express router
+const contactController = require('../controllers/contactController');
+const soccerController = require('../controllers/soccerController')
 const router = require('express').Router();
-// Set default API response
 router.get('/', function (req, res) {
     res.json({
         status: 'API Its Working'
     });
 });
-// Import contact controller
-const contactController = require('../controllers/contactController');
-// Contact routes
+
 router.route('/contacts')
     .get(contactController.index)
     .post(contactController.new);
@@ -18,7 +15,10 @@ router.route('/contacts/:contact_id')
     .patch(contactController.update)
     .put(contactController.update)
     .delete(contactController.delete);
-router.route('/contactsasd')
-    .get(contactController.asd)    
-// Export API routes
+router.route('/soccers')
+    .get(soccerController.all)
+    .post(soccerController.new)
+router.route('/soccers/:soccer_id')
+    .put(soccerController.update)    
+
 module.exports = router;
