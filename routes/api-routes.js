@@ -1,5 +1,6 @@
 const contactController = require('../controllers/contactController');
 const soccerController = require('../controllers/soccerController')
+const authController = require('../controllers/authController')
 const router = require('express').Router();
 router.get('/', function (req, res) {
     res.json({
@@ -15,6 +16,12 @@ router.route('/contacts/:contact_id')
     .patch(contactController.update)
     .put(contactController.update)
     .delete(contactController.delete);
+router.route('/auth/login')
+    .post(authController.login)
+router.route('/auth/register')
+    .post(authController.new)
+router.route('/auth/sign-out')
+    .post(authController.logout)    
 router.route('/soccers')
     .get(soccerController.all)
     .post(soccerController.new)
