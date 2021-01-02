@@ -34,6 +34,7 @@ exports.new = (req, res) => {
     soccer.sex = req.body.sex,
     soccer.price = req.body.price,
     soccer.desc = req.body.desc,
+    soccer.agentId = req.body.agentId,
     soccer.age = helper.calcAge(req.body.birthdate)
     soccer.save((err) => {
         if (err)

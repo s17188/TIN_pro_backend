@@ -1,5 +1,5 @@
 Agent = require('../models/agentModel');
-var jwt = require('jsonwebtoken');
+jwt = require('jsonwebtoken');
 
 exports.login = (req,res) =>{
     Agent.findOne({'email':req.body.email}, (err,agent)=>{

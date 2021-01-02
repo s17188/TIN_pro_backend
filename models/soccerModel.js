@@ -11,6 +11,7 @@ const schema = mongoose.Schema({
     desc:String,
     age:Number,
     fifaMultipler:{type:Number,default:0.14},
+    agentId:{type:String,required:true},
     create_date: {
         type: Date,
         default: Date.now
