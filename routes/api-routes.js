@@ -26,6 +26,8 @@ router.route('/soccers')
     .get(soccerController.all)
     .post(soccerController.new)
 router.route('/soccers/:soccer_id')
-    .put(soccerController.update)    
-
+    .put(soccerController.update)
+    .delete(soccerController.delete);    
+router.route('/soccers/agent')
+    .post(soccerController.agentSoccers)
 module.exports = router;

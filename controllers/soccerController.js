@@ -1,5 +1,6 @@
 helper = require('../helpers/helper')
 Soccer = require('../models/soccerModel')
+jwt = require('jsonwebtoken');
 
 exports.test = (req,res) => {
     res.json({
@@ -35,7 +36,7 @@ exports.new = (req, res) => {
     soccer.price = req.body.price,
     soccer.desc = req.body.desc,
     soccer.agentId = req.body.agentId,
-    soccer.age = helper.calcAge(req.body.birthdate)
+    soccer.age = req.body.birthdate ? helper.calcAge(req.body.birthdate) : null
     soccer.save((err) => {
         if (err)
             console.log("err",err)
@@ -54,14 +55,14 @@ exports.update = (req, res) => {
             res.send(err);
         soccer.name = req.body.name;
         soccer.surname = req.body.surname;
-        soccer.birthdate = req.body.birthdate;
-        soccer.nationality = req.body.nationality;
-        soccer.height = req.body.height,
-        soccer.weight = req.body.weight,
+        soccer.birthdate = req.body.birthdate || '';
+        soccer.nationality = req.body.nationality || '';
+        soccer.height = req.body.height || null,
+        soccer.weight = req.body.weight || null,
         soccer.sex = req.body.sex,
-        soccer.price = req.body.price,
-        soccer.desc = req.body.desc
-  
+        soccer.price = req.body.price || null,
+        soccer.desc = req.body.desc || ''
+        soccer.age = req.body.birthdate ? helper.calcAge(req.body.birthdate) : null
         soccer.save((err) => {
             if (err)
               res.json(err);
@@ -71,4 +72,32 @@ exports.update = (req, res) => {
             });
         });
     });
+};
+
+exports.delete = (req, res) => {
+  Soccer.remove({
+      _id: req.params.soccer_id
+  }, (err, soccer) => {
+      if (err)
+        res.json({
+          status: "error",
+          message: err,
+        });
+      res.json({
+        status: "success",
+        message: 'Soccer deleted'
+      });
+  });
+};
+
+exports.agentSoccers = (req, res) => {
+  let decoded = jwt.verify(req.body.token,'secret')
+  Soccer.find(({agentId:decoded._id}), (err, soccers) => {
+      if (err)
+        res.json(err);
+      res.json({
+        message: 'Soccer Info updated',
+        data: soccers
+      });
+  });
 };
