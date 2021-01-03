@@ -1,4 +1,5 @@
-const contactController = require('../controllers/contactController');
+const statController = require('../controllers/statController');
+const matchController = require('../controllers/matchController');
 const soccerController = require('../controllers/soccerController')
 const authController = require('../controllers/authController')
 const router = require('express').Router();
@@ -8,14 +9,6 @@ router.get('/', function (req, res) {
     });
 });
 
-router.route('/contacts')
-    .get(contactController.index)
-    .post(contactController.new);
-router.route('/contacts/:contact_id')
-    .get(contactController.view)
-    .patch(contactController.update)
-    .put(contactController.update)
-    .delete(contactController.delete);
 router.route('/auth/login')
     .post(authController.login)
 router.route('/auth/register')
@@ -30,4 +23,8 @@ router.route('/soccers/:soccer_id')
     .delete(soccerController.delete);    
 router.route('/soccers/agent')
     .post(soccerController.agentSoccers)
+router.route('/soccers/stat')
+    .post(statController.new)
+router.route('/soccers/match')
+    .post(matchController.new)         
 module.exports = router;

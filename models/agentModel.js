@@ -10,7 +10,4 @@ const schema = mongoose.Schema({
     }
 })
 
-const Agent = module.exports = mongoose.model('Agent',schema)
-module.exports.get = (callback, limit) => {
-    Agent.find(callback).limit(limit);
-}
+module.exports = mongoose.model('Agent',schema)

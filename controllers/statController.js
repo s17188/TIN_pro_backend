@@ -1,15 +1,11 @@
 helper = require('../helpers/helper')
+Stat = require('../models/statModel')
 Soccer = require('../models/soccerModel')
+Match = require('../models/matchModel')
 jwt = require('jsonwebtoken');
 
-exports.test = (req,res) => {
-    res.json({
-      message: "Soccer"
-    })
-}
-
 exports.all = (req, res) => {
-    Soccer.find((err, soccers) => {
+    Stat.get((err, stats) => {
         if (err) {
             res.json({
               status: "error",
@@ -18,42 +14,68 @@ exports.all = (req, res) => {
         }
         res.json({
           status: "success",
-          message: "Soccers retrieved successfully",
-          data: soccers
+          message: "Stats retrieved successfully",
+          data: stat
         });
-    }).populate({
-      path:'stats', 
-      select:'playtime redCards yellowCards',
-      populate:{
-        path:'match',
-        select:'stadion match_date'
-      }
-    });
+    }).populate({path:'match', select:'playtime redCards yellowCards match'});
 };
 
 exports.new = (req, res) => {
-    let soccer = new Soccer();
-    soccer.name = req.body.name;
-    soccer.surname = req.body.surname;
-    soccer.birthdate = req.body.birthdate;
-    soccer.nationality = req.body.nationality;
-    soccer.height = req.body.height,
-    soccer.weight = req.body.weight,
-    soccer.sex = req.body.sex,
-    soccer.price = req.body.price,
-    soccer.desc = req.body.desc,
-    soccer.agentId = req.body.agentId,
-    soccer.age = req.body.birthdate ? helper.calcAge(req.body.birthdate) : null
-    soccer.save((err) => {
-        if (err)
-            console.log("err",err)
+    let stat = new Stat();
+    stat.playtime = req.body.playtime;
+    stat.redCards = req.body.redCards;
+    stat.yellowCards = req.body.yellowCards;
+    stat.soccer = req.body.soccerId
+    stat.match = req.body.matchId
+    console.log(stat)
+    stat.save((err) => {
+        if (err) {
+            res.json({
+              status: "error",
+              message: err,
+            });
+        }
+        Soccer.findById({_id:stat.soccer},(err,soccer)=>{
+            if (err) {
+                res.json({
+                  status: "error",
+                  message: err,
+                });
+            }
+            console.log(soccer)
+            soccer.stats.push(stat)
+            soccer.save((err)=>{
+                if (err) {
+                    res.json({
+                      status: "error",
+                      message: err,
+                    });
+                }
+            })
+        })
+        Match.findById({_id:stat.match},(err,match)=>{
+            if (err) {
+                res.json({
+                  status: "error",
+                  message: err,
+                });
+            }
+            console.log(match)
+            match.stats.push(stat)
+            match.save((err)=>{
+                if (err) {
+                    res.json({
+                      status: "error",
+                      message: err,
+                    });
+                }
+            })
+        })
         res.json({
-          message: 'New soccer created!',
-          data: soccer
+          message: 'New stat created!',
+          data: stat
         });
     });
-
-
 };
 
 exports.update = (req, res) => {

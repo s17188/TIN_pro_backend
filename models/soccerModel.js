@@ -15,10 +15,13 @@ const schema = mongoose.Schema({
     create_date: {
         type: Date,
         default: Date.now
-    }
+    },
+    stats:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Stat'
+        }
+    ]
 })
 
-const Soccer = module.exports = mongoose.model('Soccer',schema)
-module.exports.get = (callback, limit) => {
-    Soccer.find(callback).limit(limit);
-}
+module.exports = mongoose.model('Soccer',schema)
