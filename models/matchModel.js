@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema({
-    stadion:{
+    stadium:{
         type:String,
         required:true
     },

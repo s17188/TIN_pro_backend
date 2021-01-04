@@ -3,7 +3,7 @@ Match = require('../models/matchModel')
 jwt = require('jsonwebtoken');
 
 exports.all = (req, res) => {
-    Match.get((err, matches) => {
+    Match.find((err, matches) => {
         if (err) {
             res.json({
               status: "error",
@@ -20,7 +20,7 @@ exports.all = (req, res) => {
 
 exports.new = (req, res) => {
     let match = new Match();
-    match.stadion = req.body.stadion;
+    match.stadium = req.body.stadium;
     match.match_date = req.body.match_date;
     match.stats = req.body.statId
     match.save((err) => {

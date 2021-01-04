@@ -26,7 +26,7 @@ exports.all = (req, res) => {
       select:'playtime redCards yellowCards',
       populate:{
         path:'match',
-        select:'stadion match_date'
+        select:'stadium match_date'
       }
     });
 };
@@ -103,8 +103,15 @@ exports.agentSoccers = (req, res) => {
       if (err)
         res.json(err);
       res.json({
-        message: 'Soccer Info updated',
+        message: 'Soccer Info retrieved successfully',
         data: soccers
       });
+  }).populate({
+    path:'stats', 
+    select:'playtime redCards yellowCards',
+    populate:{
+      path:'match',
+      select:'stadium match_date'
+    }
   });
 };

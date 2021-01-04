@@ -26,5 +26,6 @@ router.route('/soccers/agent')
 router.route('/soccers/stat')
     .post(statController.new)
 router.route('/soccers/match')
+    .get(matchController.all)
     .post(matchController.new)         
 module.exports = router;

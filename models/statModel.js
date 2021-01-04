@@ -1,13 +1,16 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema({
     playtime:{
-        type:Number
+        type:Number,
+        default:0
     },
     redCards:{
-        type:Number
+        type:Number,
+        default:0
     },
     yellowCards:{
-        type:Number
+        type:Number,
+        default:0
     },
     soccer:{
         type:mongoose.Schema.Types.ObjectId,
