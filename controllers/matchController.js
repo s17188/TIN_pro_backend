@@ -15,7 +15,14 @@ exports.all = (req, res) => {
           message: "Matches retrieved successfully",
           data: matches
         });
-    });
+    }).populate({
+      path:'stats', 
+      select:'playtime redCards yellowCards',
+      populate:{
+        path:'soccer',
+        select:'name surname birthdate nationality height weight sex price desc age'
+      }
+    });;
 };
 
 exports.new = (req, res) => {

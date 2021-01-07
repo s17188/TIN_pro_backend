@@ -5,7 +5,7 @@ Match = require('../models/matchModel')
 jwt = require('jsonwebtoken');
 
 exports.all = (req, res) => {
-    Stat.get((err, stats) => {
+    Stat.find((err, stats) => {
         if (err) {
             res.json({
               status: "error",
@@ -15,7 +15,7 @@ exports.all = (req, res) => {
         res.json({
           status: "success",
           message: "Stats retrieved successfully",
-          data: stat
+          data: stats
         });
     }).populate({path:'match', select:'playtime redCards yellowCards match'});
 };
