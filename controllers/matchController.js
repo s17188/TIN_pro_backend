@@ -20,7 +20,7 @@ exports.all = (req, res) => {
       select:'playtime redCards yellowCards',
       populate:{
         path:'soccer',
-        select:'name surname birthdate nationality height weight sex price desc age'
+        select:'name surname birthdate nationality height weight gender price desc age'
       }
     });;
 };

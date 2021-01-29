@@ -88,7 +88,7 @@ exports.update = (req, res) => {
         soccer.nationality = req.body.nationality || '';
         soccer.height = req.body.height || null,
         soccer.weight = req.body.weight || null,
-        soccer.sex = req.body.sex,
+        soccer.gender = req.body.gender || null,
         soccer.price = req.body.price || null,
         soccer.desc = req.body.desc || ''
         soccer.age = req.body.birthdate ? helper.calcAge(req.body.birthdate) : null
